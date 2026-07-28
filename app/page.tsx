@@ -96,6 +96,8 @@ export default function HomePage() {
               Sign in to save your goals
             </button>
           )}
+
+          <Link href={"www.github.com/0Nsingh/streamtracker.git"}><h1>Github Repo</h1></Link>
         </div>
       </div>
     </div>

@@ -3,6 +3,8 @@
 Declare what you're learning, log daily entries, build streaks, and share your journey with a public learning log page.
 
 Built with [Next.js 16](https://nextjs.org), [Prisma 7](https://prisma.io), PostgreSQL, and [Jotai](https://jotai.org) for state management.
+## Project Demo video
+- [loom video](https://www.loom.com/share/5e16ccceb4b5403b99c1aad9dd1a3f330)
 
 ## Features
 
