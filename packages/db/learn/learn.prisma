@@ -1,0 +1,97 @@
+model Roadmap {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  authorId String?
+  author   User?   @relation(name: "userRoadmap", fields: [authorId], references: [id])
+
+  updaterId String?
+  updater   User?   @relation(name: "updaterRoadmap", fields: [updaterId], references: [id])
+
+  topics   Topic[]
+  progress Progress[]
+
+  @@map(name: "Roadmap")
+}
+
+model Topic {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  roadmapId Int?
+  roadmap   Roadmap? @relation(fields: [roadmapId], references: [id])
+
+  subTopics TopicsOnSubTopics[]
+
+  authorId String?
+  author   User?   @relation(name: "userTopic", fields: [authorId], references: [id])
+
+  updaterId String?
+  updater   User?   @relation(name: "updaterTopic", fields: [updaterId], references: [id])
+
+  progress Progress[]
+
+  @@map(name: "Topic")
+}
+
+model SubTopic {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  topics TopicsOnSubTopics[]
+
+  authorId String?
+  author   User?   @relation(name: "userSubtopic", fields: [authorId], references: [id])
+
+  updaterId String?
+  updater   User?   @relation(name: "updaterSubtopic", fields: [updaterId], references: [id])
+
+  progress Progress[]
+
+  @@map(name: "SubTopic")
+}
+
+model TopicsOnSubTopics {
+  topicId    Int
+  topic      Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  subTopicId Int
+  subTopic   SubTopic @relation(fields: [subTopicId], references: [id], onDelete: Cascade)
+
+  @@id([topicId, subTopicId])
+  @@map(name: "topics_on_subtopics")
+}
+
+enum ProgramType {
+  ROADMAP
+  TOPIC
+  SUBTOPIC
+}
+
+model Progress {
+  id          Int         @id @default(autoincrement())
+  programType ProgramType
+  progress    Int?
+
+  roadmapId Int?
+  roadmap   Roadmap? @relation(fields: [roadmapId], references: [id])
+
+  topicId Int?
+  topic   Topic? @relation(fields: [topicId], references: [id])
+
+  subtopicId Int?
+  subtopic   SubTopic? @relation(fields: [subtopicId], references: [id])
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map(name: "Progress")
+}
